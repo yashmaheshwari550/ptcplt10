@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTCPL T10 Season 1 | Piwari T10 Cricket Premier League</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & Rajdhani for IPL style typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gold: {
+                300: '#ffe885',
+                400: '#fadb43',
+                500: '#ffd700',
+                600: '#dfa823',
+                700: '#b8860b',
+                800: '#8b6508'
+              },
+              darkbg: '#0a0a0c',
+              darkcard: '#121217',
+              darkborder: '#23232e'
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Rajdhani', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        background-color: #0a0a0c;
+        color: #f3f4f6;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+      }
+      
+      .font-display {
+        font-family: 'Rajdhani', sans-serif;
+      }
+
+      /* Metallic Gold Text Gradient */
+      .text-gold-gradient {
+        background: linear-gradient(135deg, #fff2a3 0%, #ffd700 50%, #b8860b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Glowing Gold Border & Shadows */
+      .gold-glow {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.25);
+      }
+      .gold-glow-hover:hover {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
+        border-color: #ffd700;
+      }
+
+      /* Stadium Light Background Effect */
+      .stadium-bg {
+        background: radial-gradient(circle at 50% 20%, rgba(255, 215, 0, 0.12) 0%, rgba(10, 10, 12, 0.95) 70%), 
+                    url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      }
+
+      /* Glassmorphism */
+      .glass-card {
+        background: rgba(18, 18, 23, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+      }
+      
+      .glass-card-accent {
+        background: linear-gradient(145deg, rgba(28, 28, 36, 0.9), rgba(18, 18, 23, 0.95));
+        border: 1px solid rgba(255, 215, 0, 0.25);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0c;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333342;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ffd700;
+      }
+
+      @keyframes pulseSlow {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.85; transform: scale(1.02); }
+      }
+      .pulse-slow {
+        animation: pulseSlow 3s infinite ease-in-out;
+      }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-black">
+
+    <!-- TOP STICKY HEADER -->
+    <header class="sticky top-0 z-50 bg-darkbg/90 backdrop-blur-md border-b border-gold-500/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          
+          <!-- Logo & Brand Name -->
+          <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+            <div class="relative w-12 h-12 rounded-full bg-gradient-to-tr from-gold-700 via-gold-500 to-yellow-200 p-0.5 shadow-lg shadow-gold-500/20">
+              <div class="w-full h-full bg-darkbg rounded-full flex items-center justify-center font-display font-black text-2xl text-gold-500 tracking-tighter">
+                <i class="fa-solid font-bold fa-trophy text-lg text-gold-400"></i>
+              </div>
+            </div>
+            <div>
+              <span class="block font-display font-extrabold text-xl sm:text-2xl tracking-wider text-white uppercase leading-none">
+                PTCPL <span class="text-gold-500">T10</span>
+              </span>
+              <span class="block text-[10px] sm:text-xs text-gray-400 tracking-widest font-semibold uppercase">
+                Piwari Premier League
+              </span>
+            </div>
+          </div>
+
+          <!-- Desktop Navigation Menu -->
+          <nav class="hidden md:flex items-center space-x-1 lg:space-x-4">
+            <button onclick="navigateTo('home')" id="nav-home" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gold-500 bg-gold-500/10 transition-all">Home</button>
+            <button onclick="navigateTo('register')" id="nav-register" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Register</button>
+            <button onclick="navigateTo('teams')" id="nav-teams" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Teams</button>
+            <button onclick="navigateTo('fixtures')" id="nav-fixtures" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Match Center</button>
+            <button onclick="navigateTo('points')" id="nav-points" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Points Table</button>
+            <button onclick="navigateTo('gallery')" id="nav-gallery" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Gallery</button>
+            <button onclick="navigateTo('contact')" id="nav-contact" class="nav-btn px-3 py-2 text-sm font-semibold rounded-lg text-gray-300 hover:text-gold-500 hover:bg-darkcard transition-all">Contact</button>
+          </nav>
+
+          <!-- Right Action Buttons -->
+          <div class="hidden lg:flex items-center space-x-3">
+            <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-semibold text-xs flex items-center space-x-2 transition-all shadow-md">
+              <i class="fa-brands fa-instagram text-base"></i>
+              <span>@ptcplt10</span>
+            </a>
+            <button onclick="navigateTo('admin')" id="nav-admin" class="px-3 py-2 border border-gold-500/40 text-gold-400 hover:bg-gold-500 hover:text-black rounded-lg font-semibold text-xs flex items-center space-x-1.5 transition-all">
+              <i class="fa-solid fa-user-shield"></i>
+              <span>Admin</span>
+            </button>
+          </div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <div class="flex items-center md:hidden space-x-2">
+            <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="p-2 text-pink-500 text-xl">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="p-2 text-gray-300 hover:text-gold-500 text-2xl focus:outline-none">
+              <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Navigation Menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-darkcard border-b border-gold-500/20 px-4 pt-2 pb-6 space-y-2">
+        <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gold-400 bg-gold-500/10">Home</button>
+        <button onclick="navigateTo('register'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Register Player</button>
+        <button onclick="navigateTo('teams'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Official Teams</button>
+        <button onclick="navigateTo('fixtures'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Match Center & Results</button>
+        <button onclick="navigateTo('points'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Points Table</button>
+        <button onclick="navigateTo('gallery'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Photo Gallery</button>
+        <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:text-gold-400 hover:bg-darkbg">Organizers & Contact</button>
+        <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-gold-400 border border-gold-500/30 flex items-center justify-between">
+          <span>Admin Portal</span>
+          <i class="fa-solid fa-lock text-xs"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="flex-grow">
+
+      <!-- PAGE: HOME -->
+      <section id="page-home" class="page-content">
+        <!-- Hero Banner Section -->
+        <div class="relative stadium-bg py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-gold-500/20 overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-transparent to-transparent"></div>
+          
+          <div class="relative max-w-5xl mx-auto text-center space-y-6">
+            
+            <!-- Season Tag Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/40 text-gold-400 text-xs sm:text-sm font-bold uppercase tracking-widest">
+              <span class="w-2 h-2 rounded-full bg-gold-500 animate-ping"></span>
+              <span>Official Season 1 Announcement</span>
+            </div>
+
+            <!-- Big Title -->
+            <h1 class="font-display font-black text-4xl sm:text-6xl md:text-7xl uppercase tracking-tight text-white leading-none">
+              PIWARI T10 CRICKET <br>
+              <span class="text-gold-gradient">PREMIER LEAGUE</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-gray-300 text-sm sm:text-lg font-medium">
+              8 Powerful Teams • High Voltage T10 Action • Massive Cash Prizes & Trophy Glory. Registration is NOW OPEN for top cricket talents!
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="pt-4 flex flex-wrap justify-center gap-4">
+              <button onclick="navigateTo('register')" class="px-8 py-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black font-display font-bold text-lg rounded-xl shadow-lg shadow-gold-500/25 transition-all transform hover:-translate-y-0.5 flex items-center space-x-3">
+                <i class="fa-solid fa-id-card"></i>
+                <span>REGISTER AS PLAYER NOW</span>
+              </button>
+              
+              <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="px-6 py-4 bg-darkcard border border-gold-500/30 hover:border-gold-500 text-white font-display font-bold text-lg rounded-xl transition-all flex items-center space-x-3">
+                <i class="fa-brands fa-instagram text-pink-500 text-xl"></i>
+                <span>FOLLOW @PTCPLT10</span>
+              </a>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="pt-8">
+              <div class="text-xs uppercase tracking-widest text-gold-400 font-bold mb-3">Tournament Kick-Off Countdown</div>
+              <div class="flex justify-center items-center space-x-3 sm:space-x-6 text-center">
+                <div class="glass-card p-3 sm:p-4 rounded-xl min-w-[70px] sm:min-w-[90px]">
+                  <span id="cd-days" class="font-display font-extrabold text-2xl sm:text-4xl text-gold-400">14</span>
+                  <span class="block text-[10px] text-gray-400 uppercase font-semibold">Days</span>
+                </div>
+                <span class="text-gold-500 font-bold text-2xl">:</span>
+                <div class="glass-card p-3 sm:p-4 rounded-xl min-w-[70px] sm:min-w-[90px]">
+                  <span id="cd-hours" class="font-display font-extrabold text-2xl sm:text-4xl text-gold-400">08</span>
+                  <span class="block text-[10px] text-gray-400 uppercase font-semibold">Hours</span>
+                </div>
+                <span class="text-gold-500 font-bold text-2xl">:</span>
+                <div class="glass-card p-3 sm:p-4 rounded-xl min-w-[70px] sm:min-w-[90px]">
+                  <span id="cd-mins" class="font-display font-extrabold text-2xl sm:text-4xl text-gold-400">42</span>
+                  <span class="block text-[10px] text-gray-400 uppercase font-semibold">Minutes</span>
+                </div>
+                <span class="text-gold-500 font-bold text-2xl">:</span>
+                <div class="glass-card p-3 sm:p-4 rounded-xl min-w-[70px] sm:min-w-[90px]">
+                  <span id="cd-secs" class="font-display font-extrabold text-2xl sm:text-4xl text-gold-400">19</span>
+                  <span class="block text-[10px] text-gray-400 uppercase font-semibold">Seconds</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Featured Live/Next Match Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="font-display font-extrabold text-2xl sm:text-3xl uppercase tracking-wider text-white flex items-center space-x-3">
+              <span class="w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+              <span>Tournament Highlight Feature</span>
+            </h2>
+            <button onclick="navigateTo('fixtures')" class="text-gold-400 hover:text-gold-300 text-sm font-semibold flex items-center space-x-1">
+              <span>View All Fixtures</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- Live Match Spotlight Banner -->
+          <div id="featuredMatchCard" class="glass-card-accent p-6 rounded-2xl relative overflow-hidden">
+            <div class="text-center text-gray-400 text-sm font-medium py-4">
+              <i class="fa-solid fa-cricket-bat-ball text-3xl text-gold-500 mb-2 block"></i>
+              Matches will be scheduled shortly by the tournament committee. Registrations are currently active!
+            </div>
+          </div>
+        </div>
+
+        <!-- Tournament Highlights Cards -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-gold-500/10">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-gold-500">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center text-2xl mb-4">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white uppercase mb-2">Grand Cash Prizes</h3>
+              <p class="text-gray-400 text-sm">Massive prize pool for Champions, Runners-up, Man of the Tournament, Best Batsman & Best Bowler.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-gold-500">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center text-2xl mb-4">
+                <i class="fa-solid fa-shirt"></i>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white uppercase mb-2">Official Team Jerseys</h3>
+              <p class="text-gray-400 text-sm">Every selected player receives custom colored high-quality team kit with personalized jersey numbers.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-gold-500">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center text-2xl mb-4">
+                <i class="fa-solid fa-video"></i>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white uppercase mb-2">Instagram & Live Coverage</h3>
+              <p class="text-gray-400 text-sm">Match highlights, player interviews, and scores broadcasted live on Instagram @ptcplt10.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: REGISTRATION -->
+      <section id="page-register" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">PTCPL T10 Season 1</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">Official Player Registration</h1>
+            <p class="text-gray-400 text-sm mt-2">Complete the form below to register for the upcoming official team selection & trial matches.</p>
+          </div>
+
+          <!-- Registration Form Container -->
+          <div class="glass-card p-6 sm:p-8 rounded-2xl border border-gold-500/30 shadow-2xl relative">
+            
+            <form id="registrationForm" onsubmit="handlePlayerRegistration(event)" class="space-y-6">
+              
+              <!-- Personal Details Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                
+                <!-- Full Name -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Full Name *</label>
+                  <input type="text" id="regFullName" required placeholder="e.g. Rahul Sharma" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+
+                <!-- Mobile Number -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Mobile Number (WhatsApp) *</label>
+                  <input type="tel" id="regMobile" required pattern="[0-9]{10}" placeholder="10 Digit Phone Number" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+
+                <!-- Age / DOB -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Age or Date of Birth *</label>
+                  <input type="text" id="regDob" required placeholder="e.g. 22 or 15/08/2002" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+
+                <!-- Village / City -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Village / City *</label>
+                  <input type="text" id="regCity" required placeholder="e.g. Piwari, Kasganj, Soron" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+
+              </div>
+
+              <!-- Cricket Profile Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2 border-t border-darkborder">
+                
+                <!-- Preferred Team -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Preferred Team Choice *</label>
+                  <select id="regTeam" required class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                    <option value="" disabled selected>Select Team Choice</option>
+                    <option value="Soron Lions">Soron Lions</option>
+                    <option value="Piwari Panthers">Piwari Panthers</option>
+                    <option value="Kasganj Kings">Kasganj Kings</option>
+                    <option value="Etah Warriors">Etah Warriors</option>
+                    <option value="Marehra Strikes">Marehra Strikes</option>
+                    <option value="Mohanpura Titans">Mohanpura Titans</option>
+                    <option value="Bilram Royals">Bilram Royals</option>
+                    <option value="Mirehchi Knights">Mirehchi Knights</option>
+                  </select>
+                </div>
+
+                <!-- Playing Role -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Player Primary Role *</label>
+                  <select id="regRole" required onchange="calculateFee()" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                    <option value="" disabled selected>Select Primary Role</option>
+                    <option value="Batsman">Batsman (₹399)</option>
+                    <option value="Bowler">Bowler (₹399)</option>
+                    <option value="Wicket-keeper">Wicket-Keeper (₹399)</option>
+                    <option value="All-rounder">All-Rounder (₹449)</option>
+                  </select>
+                </div>
+
+                <!-- Experience Level -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Playing Experience Level *</label>
+                  <select id="regExperience" required class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                    <option value="Beginner">Beginner / Casual</option>
+                    <option value="Intermediate" selected>Intermediate / Local Tournaments</option>
+                    <option value="Club Level">Club Level Player</option>
+                    <option value="District Level">District / Division Level</option>
+                  </select>
+                </div>
+
+                <!-- Profile Photo URL / Avatar -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Profile Photo URL (Optional)</label>
+                  <input type="url" id="regPhoto" placeholder="https://image-url.com/photo.jpg" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+
+              </div>
+
+              <!-- Dynamic Fee Summary Card -->
+              <div class="bg-gold-500/10 border border-gold-500/30 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <span class="block text-xs font-bold text-gold-400 uppercase">Registration Fee Payable</span>
+                  <span class="text-xs text-gray-300">All-rounder: ₹449 | Other Roles: ₹399</span>
+                </div>
+                <div class="text-right">
+                  <span id="calculatedFeeDisplay" class="font-display font-extrabold text-3xl text-gold-400">₹399</span>
+                </div>
+              </div>
+
+              <!-- Payment Section -->
+              <div class="space-y-4 pt-2 border-t border-darkborder">
+                <h3 class="font-display font-bold text-lg text-white uppercase flex items-center space-x-2">
+                  <i class="fa-solid fa-qrcode text-gold-400"></i>
+                  <span>Payment Details (UPI / QR Code)</span>
+                </h3>
+
+                <div class="bg-darkbg p-4 rounded-xl border border-darkborder flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div class="text-center sm:text-left space-y-1">
+                    <span class="text-xs text-gray-400 block font-semibold">Official UPI ID for Payment</span>
+                    <span class="font-mono text-gold-400 font-bold text-sm bg-darkcard px-3 py-1.5 rounded-lg border border-gold-500/20 inline-block">ptcpl@upi</span>
+                    <p class="text-[11px] text-gray-400">Pay via PhonePe, Google Pay, Paytm or BHIM UPI.</p>
+                  </div>
+                  <button type="button" onclick="copyUpiId('ptcpl@upi')" class="px-4 py-2 bg-gold-500/20 text-gold-400 hover:bg-gold-500 hover:text-black rounded-lg text-xs font-bold transition-all">
+                    <i class="fa-solid fa-copy mr-1"></i> Copy UPI ID
+                  </button>
+                </div>
+
+                <!-- Payment Reference ID -->
+                <div>
+                  <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">UPI UTR / Transaction Ref ID *</label>
+                  <input type="text" id="regUtr" required placeholder="Enter 12-Digit UTR Number after payment" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="submitRegBtn" class="w-full py-4 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black font-display font-black text-xl rounded-xl shadow-xl shadow-gold-500/20 transition-all flex items-center justify-center space-x-3">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>COMPLETE REGISTRATION NOW</span>
+              </button>
+
+            </form>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- REGISTRATION SUCCESS MODAL / BADGE -->
+      <div id="registrationModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-card-accent max-w-lg w-full rounded-2xl p-6 sm:p-8 border-2 border-gold-500 relative text-center space-y-5 max-h-[90vh] overflow-y-auto">
+          
+          <button onclick="closeModal('registrationModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <!-- Checkmark Icon -->
+          <div class="w-16 h-16 bg-gold-500/20 border-2 border-gold-500 text-gold-400 rounded-full flex items-center justify-center mx-auto text-3xl">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+
+          <div>
+            <span class="text-xs font-bold text-gold-400 uppercase tracking-widest block">Registration Confirmed</span>
+            <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white uppercase">Player Official Pass</h2>
+          </div>
+
+          <!-- Player Pass Visual Badge -->
+          <div class="bg-gradient-to-b from-darkcard to-darkbg p-5 rounded-xl border border-gold-500/30 text-left space-y-3 relative overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-gold-500/10 rounded-full blur-2xl"></div>
+
+            <div class="flex justify-between items-start border-b border-gold-500/20 pb-3">
+              <div>
+                <span class="text-[10px] text-gray-400 font-bold uppercase block">Registration ID</span>
+                <span id="passRegId" class="font-mono font-black text-gold-400 text-lg">PTCPL-2026-XXXX</span>
+              </div>
+              <span class="px-2.5 py-1 bg-yellow-500/20 text-yellow-400 text-[10px] font-bold uppercase rounded-md border border-yellow-500/30">
+                Fee Pending Review
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <span class="text-gray-400 block text-[10px]">Player Name:</span>
+                <span id="passName" class="font-bold text-white text-sm">--</span>
+              </div>
+              <div>
+                <span class="text-gray-400 block text-[10px]">Mobile:</span>
+                <span id="passMobile" class="font-bold text-white">--</span>
+              </div>
+              <div>
+                <span class="text-gray-400 block text-[10px]">Role:</span>
+                <span id="passRole" class="font-bold text-gold-400">--</span>
+              </div>
+              <div>
+                <span class="text-gray-400 block text-[10px]">Preferred Team:</span>
+                <span id="passTeam" class="font-bold text-white">--</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-300">
+            Please save your Registration ID. Tournament organizers will review your payment UTR and notify you via WhatsApp.
+          </p>
+
+          <!-- Social CTAs -->
+          <div class="pt-2 space-y-3">
+            <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl font-bold text-sm flex items-center justify-center space-x-2 transition-all">
+              <i class="fa-brands fa-instagram text-lg"></i>
+              <span>Follow @ptcplt10 on Instagram</span>
+            </a>
+
+            <button onclick="shareTournament()" class="w-full py-3 bg-darkcard border border-gold-500/30 text-gold-400 hover:bg-gold-500/10 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 transition-all">
+              <i class="fa-solid fa-share-nodes"></i>
+              <span>Share Tournament With Friends</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PAGE: TEAMS -->
+      <section id="page-teams" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+          
+          <div class="text-center">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">Season 1 Franchise Teams</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">8 Official Teams</h1>
+            <p class="text-gray-400 text-sm mt-1 max-w-xl mx-auto">Explore official team rosters, captains, and squad lineups competing for the PTCPL T10 Trophy.</p>
+          </div>
+
+          <!-- Teams Grid -->
+          <div id="teamsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Dynamic Teams Rendered Here -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE: FIXTURES & MATCH CENTER -->
+      <section id="page-fixtures" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto space-y-6">
+          
+          <div class="text-center">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">PTCPL T10 Match Center</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">Fixtures & Live Scores</h1>
+          </div>
+
+          <!-- Match Tabs -->
+          <div class="flex justify-center border-b border-darkborder space-x-4">
+            <button onclick="filterMatches('upcoming')" id="tab-upcoming" class="match-tab-btn pb-3 text-sm font-bold border-b-2 border-gold-500 text-gold-400">Upcoming</button>
+            <button onclick="filterMatches('live')" id="tab-live" class="match-tab-btn pb-3 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white">Live Matches</button>
+            <button onclick="filterMatches('completed')" id="tab-completed" class="match-tab-btn pb-3 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white">Results</button>
+          </div>
+
+          <!-- Match List Container -->
+          <div id="matchesContainer" class="space-y-4">
+            <!-- Dynamic Matches Rendered Here -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE: POINTS TABLE -->
+      <section id="page-points" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto space-y-6">
+          
+          <div class="text-center">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">Season 1 Standings</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">Points Table</h1>
+          </div>
+
+          <div class="glass-card rounded-2xl overflow-hidden border border-gold-500/20">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-darkcard text-xs font-bold text-gold-400 uppercase border-b border-gold-500/20">
+                  <tr>
+                    <th class="px-4 py-3">Pos</th>
+                    <th class="px-4 py-3">Team</th>
+                    <th class="px-4 py-3 text-center">Played</th>
+                    <th class="px-4 py-3 text-center">Won</th>
+                    <th class="px-4 py-3 text-center">Lost</th>
+                    <th class="px-4 py-3 text-center">Tied</th>
+                    <th class="px-4 py-3 text-center">NRR</th>
+                    <th class="px-4 py-3 text-center font-black text-gold-400">Points</th>
+                  </tr>
+                </thead>
+                <tbody id="pointsTableBody" class="divide-y divide-darkborder text-gray-300">
+                  <!-- Dynamic Points Table -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE: GALLERY -->
+      <section id="page-gallery" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-6">
+          
+          <div class="text-center">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">Action & Highlights</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">Tournament Gallery</h1>
+          </div>
+
+          <!-- Gallery Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="glass-card rounded-xl overflow-hidden group">
+              <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80" alt="Stadium" class="w-full h-56 object-cover group-hover:scale-105 transition-all duration-300">
+              <div class="p-4"><span class="text-xs font-bold text-gold-400">Stadium Floodlights</span></div>
+            </div>
+            <div class="glass-card rounded-xl overflow-hidden group">
+              <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80" alt="Cricket Match" class="w-full h-56 object-cover group-hover:scale-105 transition-all duration-300">
+              <div class="p-4"><span class="text-xs font-bold text-gold-400">Match Action Shots</span></div>
+            </div>
+            <div class="glass-card rounded-xl overflow-hidden group">
+              <img src="https://images.unsplash.com/photo-1512719994953-eabf50895df7?auto=format&fit=crop&w=800&q=80" alt="Trophy" class="w-full h-56 object-cover group-hover:scale-105 transition-all duration-300">
+              <div class="p-4"><span class="text-xs font-bold text-gold-400">Winner's Trophy</span></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE: CONTACT -->
+      <section id="page-contact" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto space-y-8">
+          
+          <div class="text-center">
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">Get In Touch</span>
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase mt-2">Tournament Committee</h1>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-6 rounded-2xl border border-gold-500/20 space-y-4">
+              <h3 class="font-display font-bold text-xl text-white uppercase">Organizing Committee</h3>
+              <p class="text-gray-300 text-sm">Piwari T10 Cricket Premier League (PTCPL), Kasganj Region, UP.</p>
+
+              <div class="space-y-3 pt-2 text-sm">
+                <div class="flex items-center space-x-3 text-gray-300">
+                  <i class="fa-brands fa-instagram text-pink-500 text-xl"></i>
+                  <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="hover:text-gold-400 underline">@ptcplt10</a>
+                </div>
+                <div class="flex items-center space-x-3 text-gray-300">
+                  <i class="fa-solid fa-phone text-gold-400"></i>
+                  <span>+91 98765 43210</span>
+                </div>
+                <div class="flex items-center space-x-3 text-gray-300">
+                  <i class="fa-solid fa-location-dot text-gold-400"></i>
+                  <span>Piwari Cricket Ground, Kasganj, Uttar Pradesh</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Instagram CTA -->
+            <div class="glass-card-accent p-6 rounded-2xl text-center space-y-4 flex flex-col justify-center items-center">
+              <i class="fa-brands fa-instagram text-5xl text-pink-500"></i>
+              <h3 class="font-display font-bold text-2xl text-white uppercase">Instagram Headquarters</h3>
+              <p class="text-xs text-gray-300">Follow for tournament updates, draw results, trial dates, and player announcements.</p>
+              <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-xl text-sm transition-all shadow-lg">
+                Visit @ptcplt10 Instagram
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE: ADMIN DASHBOARD -->
+      <section id="page-admin" class="page-content hidden py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-6">
+          
+          <!-- Admin Login Card (If not logged in) -->
+          <div id="adminLoginForm" class="max-w-md mx-auto glass-card-accent p-8 rounded-2xl border-2 border-gold-500/40 text-center space-y-6">
+            <div class="w-16 h-16 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center mx-auto text-3xl">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+              <h2 class="font-display font-extrabold text-2xl text-white uppercase">Admin Security Portal</h2>
+              <p class="text-xs text-gray-400">Enter Master Key PIN to access player database & match control</p>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+              <input type="password" id="adminPinInput" required placeholder="Enter Admin Password (Default: 1234)" class="w-full bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-3 text-center text-white text-lg font-mono focus:outline-none">
+              
+              <button type="submit" class="w-full py-3 bg-gold-500 hover:bg-gold-400 text-black font-bold font-display rounded-xl uppercase transition-all">
+                Unlock Control Dashboard
+              </button>
+            </form>
+          </div>
+
+          <!-- Admin Dashboard Panel (Visible when authenticated) -->
+          <div id="adminPanel" class="hidden space-y-6">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-darkcard p-4 rounded-xl border border-gold-500/30">
+              <div>
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">Committee Management</span>
+                <h2 class="font-display font-extrabold text-2xl text-white uppercase">PTCPL T10 Control Center</h2>
+              </div>
+              
+              <div class="flex items-center space-x-3">
+                <button onclick="exportToCSV()" class="px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg text-xs flex items-center space-x-2">
+                  <i class="fa-solid fa-file-csv text-sm"></i>
+                  <span>Export Players CSV</span>
+                </button>
+                <button onclick="adminLogout()" class="px-3 py-2 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white font-bold rounded-lg text-xs">
+                  Logout
+                </button>
+              </div>
+            </div>
+
+            <!-- Tab Switcher inside Admin -->
+            <div class="flex space-x-3 border-b border-darkborder pb-2">
+              <button onclick="switchAdminTab('players')" id="adminTabBtn-players" class="px-4 py-2 text-xs font-bold rounded-lg bg-gold-500 text-black">
+                Registered Players (<span id="regCountBadge">0</span>)
+              </button>
+              <button onclick="switchAdminTab('fixtures')" id="adminTabBtn-fixtures" class="px-4 py-2 text-xs font-bold rounded-lg bg-darkcard text-gray-300">
+                Fixtures & Scores
+              </button>
+            </div>
+
+            <!-- TAB: Registered Players Table -->
+            <div id="adminTab-players" class="space-y-4">
+              <!-- Search & Filter Controls -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <input type="text" id="adminSearch" onkeyup="filterAdminPlayers()" placeholder="Search Name, Reg ID, Mobile..." class="bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-2 text-xs text-white">
+                
+                <select id="adminStatusFilter" onchange="filterAdminPlayers()" class="bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-2 text-xs text-white">
+                  <option value="ALL">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Fee Paid">Fee Paid</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+
+                <select id="adminTeamFilter" onchange="filterAdminPlayers()" class="bg-darkbg border border-darkborder focus:border-gold-500 rounded-xl px-4 py-2 text-xs text-white">
+                  <option value="ALL">All Teams</option>
+                  <option value="Soron Lions">Soron Lions</option>
+                  <option value="Piwari Panthers">Piwari Panthers</option>
+                  <option value="Kasganj Kings">Kasganj Kings</option>
+                  <option value="Etah Warriors">Etah Warriors</option>
+                  <option value="Marehra Strikes">Marehra Strikes</option>
+                  <option value="Mohanpura Titans">Mohanpura Titans</option>
+                  <option value="Bilram Royals">Bilram Royals</option>
+                  <option value="Mirehchi Knights">Mirehchi Knights</option>
+                </select>
+              </div>
+
+              <!-- Players Data Table -->
+              <div class="glass-card rounded-xl overflow-hidden border border-gold-500/20">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-xs">
+                    <thead class="bg-darkcard text-gold-400 font-bold uppercase border-b border-gold-500/20">
+                      <tr>
+                        <th class="p-3">Reg ID</th>
+                        <th class="p-3">Player Name</th>
+                        <th class="p-3">Mobile</th>
+                        <th class="p-3">Role</th>
+                        <th class="p-3">Team</th>
+                        <th class="p-3">UTR / Fee</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminPlayersTableBody" class="divide-y divide-darkborder text-gray-300">
+                      <!-- Dynamic Table Data -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB: Match Fixture Creator & Live Score Update -->
+            <div id="adminTab-fixtures" class="hidden space-y-6">
+              <div class="glass-card p-6 rounded-xl border border-gold-500/20">
+                <h3 class="font-display font-bold text-lg text-gold-400 uppercase mb-4">Add New Match Fixture</h3>
+                <form onsubmit="handleAddFixture(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <select id="fixTeamA" required class="bg-darkbg border border-darkborder rounded-xl p-2 text-xs text-white">
+                    <option value="Soron Lions">Soron Lions</option>
+                    <option value="Piwari Panthers">Piwari Panthers</option>
+                    <option value="Kasganj Kings">Kasganj Kings</option>
+                    <option value="Etah Warriors">Etah Warriors</option>
+                    <option value="Marehra Strikes">Marehra Strikes</option>
+                    <option value="Mohanpura Titans">Mohanpura Titans</option>
+                    <option value="Bilram Royals">Bilram Royals</option>
+                    <option value="Mirehchi Knights">Mirehchi Knights</option>
+                  </select>
+
+                  <select id="fixTeamB" required class="bg-darkbg border border-darkborder rounded-xl p-2 text-xs text-white">
+                    <option value="Piwari Panthers">Piwari Panthers</option>
+                    <option value="Soron Lions">Soron Lions</option>
+                    <option value="Kasganj Kings">Kasganj Kings</option>
+                    <option value="Etah Warriors">Etah Warriors</option>
+                    <option value="Marehra Strikes">Marehra Strikes</option>
+                    <option value="Mohanpura Titans">Mohanpura Titans</option>
+                    <option value="Bilram Royals">Bilram Royals</option>
+                    <option value="Mirehchi Knights">Mirehchi Knights</option>
+                  </select>
+
+                  <input type="text" id="fixVenue" placeholder="Venue (e.g. Piwari Ground)" required class="bg-darkbg border border-darkborder rounded-xl p-2 text-xs text-white">
+
+                  <button type="submit" class="sm:col-span-3 py-3 bg-gold-500 text-black font-bold font-display rounded-xl uppercase">
+                    Publish Fixture
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-darkcard border-t border-gold-500/20 py-8 px-4 text-center text-xs text-gray-400 space-y-4">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-left">
+          <span class="font-display font-black text-xl text-white">PTCPL <span class="text-gold-500">T10</span> SEASON 1</span>
+          <p class="text-[11px] text-gray-400">Official Piwari T10 Cricket Premier League Tournament Website.</p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <a href="https://www.instagram.com/ptcplt10/" target="_blank" class="w-10 h-10 rounded-full bg-gold-500/10 text-pink-500 border border-gold-500/20 flex items-center justify-center text-lg hover:bg-gold-500 hover:text-black transition-all">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <button onclick="navigateTo('admin')" class="text-xs text-gold-400 hover:underline">
+            Admin Portal
+          </button>
+        </div>
+      </div>
+      <div class="border-t border-darkborder pt-4 text-[10px] text-gray-400">
+        &copy; 2026 PTCPL T10. All Rights Reserved. Built for Cricket Passion.
+      </div>
+    </footer>
+
+    <!-- FIREBASE MODULE & APPLICATION LOGIC -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, collection, doc, setDoc, onSnapshot, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      // Global App Variables
+      const appId = typeof __app_id !== 'undefined' ? __app_id : 'ptcpl-t10-app';
+      const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+        apiKey: "demo-key",
+        authDomain: "demo.firebaseapp.com",
+        projectId: "demo-project",
+        storageBucket: "demo.appspot.com",
+        messagingSenderId: "123456",
+        appId: "1:123456:web:12345"
+      };
+
+      let db, auth;
+      let allRegistrations = [];
+      let allMatches = [];
+
+      // Official 8 Teams Preset Data
+      const OFFICIAL_TEAMS = [
+        { id: 1, name: "Soron Lions", icon: "fa-shield-cat", color: "from-amber-600 to-yellow-500", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 2, name: "Piwari Panthers", icon: "fa-paw", color: "from-purple-700 to-indigo-600", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 3, name: "Kasganj Kings", icon: "fa-crown", color: "from-gold-600 to-yellow-400", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 4, name: "Etah Warriors", icon: "fa-shield-halved", color: "from-red-700 to-rose-500", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 5, name: "Marehra Strikes", icon: "fa-bolt-lightning", color: "from-blue-600 to-cyan-500", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 6, name: "Mohanpura Titans", icon: "fa-gem", color: "from-emerald-700 to-teal-500", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 7, name: "Bilram Royals", icon: "fa-chess-king", color: "from-fuchsia-700 to-pink-500", captain: "TBD", vc: "TBD", wk: "TBD" },
+        { id: 8, name: "Mirehchi Knights", icon: "fa-dragon", color: "from-slate-700 to-gray-500", captain: "TBD", vc: "TBD", wk: "TBD" }
+      ];
+
+      window.addEventListener('load', async () => {
+        try {
+          const app = initializeApp(firebaseConfig);
+          db = getFirestore(app);
+          auth = getAuth(app);
+
+          // Auth execution
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            await signInAnonymously(auth);
+          }
+
+          // Realtime listener for registrations collection
+          const regColRef = collection(db, 'artifacts', appId, 'public', 'data', 'registrations');
+          onSnapshot(regColRef, (snapshot) => {
+            allRegistrations = [];
+            snapshot.forEach(docSnap => {
+              allRegistrations.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            updateAdminPlayersUI();
+            updateTeamRostersUI();
+          }, (error) => {
+            console.warn("Firestore offline fallback activated:", error);
+          });
+
+          // Realtime listener for matches collection
+          const matchColRef = collection(db, 'artifacts', appId, 'public', 'data', 'matches');
+          onSnapshot(matchColRef, (snapshot) => {
+            allMatches = [];
+            snapshot.forEach(docSnap => {
+              allMatches.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderMatches('upcoming');
+            renderPointsTable();
+          });
+
+        } catch (e) {
+          console.error("Firebase init error:", e);
+        }
+
+        renderTeamsGrid();
+        renderPointsTable();
+      });
+
+      // Navigation handler
+      window.navigateTo = function(pageId) {
+        document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`page-${pageId}`).classList.remove('hidden');
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.classList.remove('text-gold-500', 'bg-gold-500/10');
+          btn.classList.add('text-gray-300');
+        });
+
+        const activeNav = document.getElementById(`nav-${pageId}`);
+        if(activeNav) {
+          activeNav.classList.add('text-gold-500', 'bg-gold-500/10');
+          activeNav.classList.remove('text-gray-300');
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      // Calculate Dynamic Registration Fee
+      window.calculateFee = function() {
+        const role = document.getElementById('regRole').value;
+        const feeDisplay = document.getElementById('calculatedFeeDisplay');
+        if (role === 'All-rounder') {
+          feeDisplay.innerText = '₹449';
+        } else {
+          feeDisplay.innerText = '₹399';
+        }
+      };
+
+      // Handle Form Submit and Save to Firestore
+      window.handlePlayerRegistration = async function(e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitRegBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Saving to Database...";
+
+        const role = document.getElementById('regRole').value;
+        const feeAmount = role === 'All-rounder' ? 449 : 399;
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        const regId = `PTCPL-2026-${randomNum}`;
+
+        const playerData = {
+          regId: regId,
+          fullName: document.getElementById('regFullName').value,
+          mobile: document.getElementById('regMobile').value,
+          dob: document.getElementById('regDob').value,
+          city: document.getElementById('regCity').value,
+          teamChoice: document.getElementById('regTeam').value,
+          role: role,
+          experience: document.getElementById('regExperience').value,
+          photoUrl: document.getElementById('regPhoto').value || '',
+          feeAmount: feeAmount,
+          utr: document.getElementById('regUtr').value,
+          status: 'Pending',
+          registeredAt: new Date().toISOString()
+        };
+
+        try {
+          if (db) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', regId);
+            await setDoc(docRef, playerData);
+          } else {
+            allRegistrations.push(playerData);
+          }
+
+          // Populate Confirmation Pass
+          document.getElementById('passRegId').innerText = regId;
+          document.getElementById('passName').innerText = playerData.fullName;
+          document.getElementById('passMobile').innerText = playerData.mobile;
+          document.getElementById('passRole').innerText = playerData.role;
+          document.getElementById('passTeam').innerText = playerData.teamChoice;
+
+          // Show Modal
+          document.getElementById('registrationModal').classList.remove('hidden');
+          document.getElementById('registrationForm').reset();
+          calculateFee();
+
+        } catch (err) {
+          alert('Registration Error. Please check your network connection.');
+          console.error(err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "COMPLETE REGISTRATION NOW";
+        }
+      };
+
+      // Teams Showcase Rendering
+      function renderTeamsGrid() {
+        const grid = document.getElementById('teamsGrid');
+        grid.innerHTML = OFFICIAL_TEAMS.map(t => `
+          <div class="glass-card rounded-2xl p-5 border border-gold-500/20 hover:border-gold-500 transition-all space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${t.color} flex items-center justify-center text-white text-2xl shadow-lg">
+                <i class="fa-solid ${t.icon}"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-extrabold text-xl text-white uppercase">${t.name}</h3>
+                <span class="text-[10px] text-gold-400 font-bold uppercase tracking-wider">Official Franchise</span>
+              </div>
+            </div>
+
+            <div class="bg-darkbg p-3 rounded-xl space-y-2 text-xs border border-darkborder">
+              <div class="flex justify-between"><span class="text-gray-400">Captain:</span><span class="font-bold text-white" id="capt-${t.id}">TBD</span></div>
+              <div class="flex justify-between"><span class="text-gray-400">Vice Captain:</span><span class="font-bold text-white" id="vc-${t.id}">TBD</span></div>
+            </div>
+
+            <div class="pt-2">
+              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">Registered Squad Roster</span>
+              <div id="roster-${t.name.replace(/\s+/g, '')}" class="space-y-1 max-h-32 overflow-y-auto text-xs text-gray-300">
+                <p class="text-gray-500 text-[11px] italic">No players assigned yet</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function updateTeamRostersUI() {
+        OFFICIAL_TEAMS.forEach(t => {
+          const key = t.name.replace(/\s+/g, '');
+          const elem = document.getElementById(`roster-${key}`);
+          if(!elem) return;
+
+          const teamPlayers = allRegistrations.filter(p => p.teamChoice === t.name);
+          if (teamPlayers.length === 0) {
+            elem.innerHTML = `<p class="text-gray-500 text-[11px] italic">No players assigned yet</p>`;
+          } else {
+            elem.innerHTML = teamPlayers.map(p => `
+              <div class="flex items-center justify-between bg-darkcard px-2.5 py-1.5 rounded border border-darkborder">
+                <span class="font-medium text-white">${p.fullName}</span>
+                <span class="text-[10px] text-gold-400 font-bold">${p.role}</span>
+              </div>
+            `).join('');
+          }
+        });
+      }
+
+      // Match Fixtures Rendering
+      window.filterMatches = function(status) {
+        document.querySelectorAll('.match-tab-btn').forEach(btn => {
+          btn.classList.remove('border-gold-500', 'text-gold-400');
+          btn.classList.add('border-transparent', 'text-gray-400');
+        });
+        document.getElementById(`tab-${status}`).classList.add('border-gold-500', 'text-gold-400');
+        renderMatches(status);
+      };
+
+      function renderMatches(type) {
+        const container = document.getElementById('matchesContainer');
+        const filtered = allMatches.filter(m => m.status === type);
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="glass-card p-8 text-center rounded-2xl text-gray-400 text-sm">
+              <i class="fa-solid fa-calendar-xmark text-3xl text-gold-500/50 mb-2 block"></i>
+              No ${type} matches found at the moment.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filtered.map(m => `
+          <div class="glass-card p-5 rounded-2xl border border-gold-500/20 space-y-4">
+            <div class="flex justify-between items-center text-xs text-gray-400 border-b border-darkborder pb-2">
+              <span>Match #${m.matchNumber || '1'} • ${m.venue || 'Piwari Ground'}</span>
+              <span class="px-2 py-0.5 rounded bg-gold-500/10 text-gold-400 font-bold uppercase text-[10px]">${m.status}</span>
+            </div>
+
+            <div class="grid grid-cols-3 items-center text-center">
+              <div class="font-display font-bold text-lg text-white">${m.teamA}</div>
+              <div class="font-display font-black text-2xl text-gold-400">VS</div>
+              <div class="font-display font-bold text-lg text-white">${m.teamB}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Points Table Generator
+      function renderPointsTable() {
+        const tbody = document.getElementById('pointsTableBody');
+        tbody.innerHTML = OFFICIAL_TEAMS.map((t, idx) => `
+          <tr class="hover:bg-darkcard/50 transition-all">
+            <td class="px-4 py-3 font-bold text-gold-400">${idx + 1}</td>
+            <td class="px-4 py-3 font-bold text-white">${t.name}</td>
+            <td class="px-4 py-3 text-center">0</td>
+            <td class="px-4 py-3 text-center">0</td>
+            <td class="px-4 py-3 text-center">0</td>
+            <td class="px-4 py-3 text-center">0</td>
+            <td class="px-4 py-3 text-center text-gray-400">+0.000</td>
+            <td class="px-4 py-3 text-center font-extrabold text-gold-400">0</td>
+          </tr>
+        `).join('');
+      }
+
+      // Admin Auth & Functions
+      window.handleAdminLogin = function(e) {
+        e.preventDefault();
+        const pin = document.getElementById('adminPinInput').value;
+        if (pin === '1234' || pin === 'ptcpl2026') {
+          document.getElementById('adminLoginForm').classList.add('hidden');
+          document.getElementById('adminPanel').classList.remove('hidden');
+          updateAdminPlayersUI();
+        } else {
+          alert('Invalid Admin Security PIN');
+        }
+      };
+
+      window.adminLogout = function() {
+        document.getElementById('adminLoginForm').classList.remove('hidden');
+        document.getElementById('adminPanel').classList.add('hidden');
+      };
+
+      function updateAdminPlayersUI() {
+        const tbody = document.getElementById('adminPlayersTableBody');
+        document.getElementById('regCountBadge').innerText = allRegistrations.length;
+
+        if (allRegistrations.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">No player registrations found in Firestore database.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = allRegistrations.map(p => `
+          <tr class="hover:bg-darkcard/50">
+            <td class="p-3 font-mono text-gold-400 font-bold">${p.regId}</td>
+            <td class="p-3 font-bold text-white">${p.fullName}</td>
+            <td class="p-3 text-gray-300">${p.mobile}</td>
+            <td class="p-3 text-gold-400 font-semibold">${p.role}</td>
+            <td class="p-3 text-gray-300">${p.teamChoice}</td>
+            <td class="p-3 font-mono text-xs">UTR: ${p.utr || 'N/A'}<br><span class="text-gold-400 font-bold">₹${p.feeAmount}</span></td>
+            <td class="p-3">
+              <span class="px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                p.status === 'Approved' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                p.status === 'Fee Paid' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                p.status === 'Rejected' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+              }">${p.status}</span>
+            </td>
+            <td class="p-3 space-x-1">
+              <button onclick="updatePlayerStatus('${p.regId}', 'Approved')" class="px-2 py-1 bg-green-600/30 text-green-400 rounded text-[10px] font-bold">Approve</button>
+              <button onclick="updatePlayerStatus('${p.regId}', 'Fee Paid')" class="px-2 py-1 bg-blue-600/30 text-blue-400 rounded text-[10px] font-bold">Fee Paid</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      window.updatePlayerStatus = async function(regId, newStatus) {
+        try {
+          if (db) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', regId);
+            await updateDoc(docRef, { status: newStatus });
+          }
+        } catch (e) {
+          console.error("Error updating player status:", e);
+        }
+      };
+
+      // Export Player Database to CSV
+      window.exportToCSV = function() {
+        if(allRegistrations.length === 0) {
+          alert('No registrations available to export.');
+          return;
+        }
+
+        let csv = 'Reg ID,Full Name,Mobile,DOB,City,Role,Team,Experience,Fee,UTR,Status\n';
+        allRegistrations.forEach(r => {
+          csv += `"${r.regId}","${r.fullName}","${r.mobile}","${r.dob}","${r.city}","${r.role}","${r.teamChoice}","${r.experience}","${r.feeAmount}","${r.utr}","${r.status}"\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `PTCPL_T10_Players_${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+      };
+
+      // Utility Helpers
+      window.copyUpiId = function(upi) {
+        navigator.clipboard.writeText(upi);
+        alert('UPI ID copied to clipboard: ' + upi);
+      };
+
+      window.closeModal = function(id) {
+        document.getElementById(id).classList.add('hidden');
+      };
+
+      window.toggleMobileMenu = function() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+      };
+
+      window.shareTournament = function() {
+        if (navigator.share) {
+          navigator.share({
+            title: 'PTCPL T10 Season 1',
+            text: 'Register now for Piwari T10 Cricket Premier League!',
+            url: window.location.href
+          });
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          alert('Website URL copied to clipboard!');
+        }
+      };
+    </script>
+</body>
+</html>
